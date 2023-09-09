@@ -1,4 +1,4 @@
-import { ConfigProvider, Form, Input, Button, Layout, Menu, Modal } from 'antd';
+import { ConfigProvider, Form, Input, Button, Layout, Menu } from 'antd';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
@@ -50,38 +50,6 @@ const DataTable = ({ rowData, updateRowData }) => {
 
 const ItemForm = ({ onSubmit }) => {
     const [form] = Form.useForm();
-    const [username, setUsername] = useState(localStorage.getItem('username') || '');
-    const [isModalVisible, setIsModalVisible] = useState(false);
-
-    useEffect(() => {
-        if (!username) {
-            setIsModalVisible(true);
-        }
-    }, [username]);
-    const handleOk = () => {
-        const newUser = form.getFieldValue('username');
-        if (newUser) {
-            setUsername(newUser);  // Zustand aktualisieren
-            localStorage.setItem('username', newUser);
-        }
-        setIsModalVisible(false);
-    };
-
-
-
-    const handleCancel = () => {
-        setIsModalVisible(false);
-    };
-
-    const compliments = [
-        `Schön, dass es dich gibt, ${username}!`,
-        `Hey ${username}, cool, dass du wieder so fleißig bist!`,
-        `Du machst das großartig, ${username}!`,
-        `${username}, du bist ein Star!`,
-        `Weiter so, ${username}! Du bist auf dem richtigen Weg!`
-    ];
-
-    const randomCompliment = compliments[Math.floor(Math.random() * compliments.length)];
 
     const handleSubmit = () => {
         form.validateFields()
@@ -92,61 +60,46 @@ const ItemForm = ({ onSubmit }) => {
     };
 
     return (
-        <>
-            <Modal title="Username" open={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-                <Form form={form}>
-                    <Form.Item
-                        name="username"
-                        rules={[{ required: true, message: 'Bitte geben Sie einen Benutzernamen ein!' }]}
-                    >
-                        <Input placeholder="Nenne deinen bezauberten Namen" />
-                    </Form.Item>
-                </Form>
-            </Modal>
-            <Form form={form}>
-                <Form.Item
-                    name="productName"
-                    label={<span style={{ color: 'gray' }}>Produktbezeichnung</span>}
-                    rules={[{ required: true }]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    name="modelNumber"
-                    label={<span style={{ color: 'gray' }}>Modell-Nr</span>}
-                    rules={[{ required: true }]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    name="manufacturer"
-                    label={<span style={{ color: 'gray' }}>Hersteller</span>}
-                    rules={[{ required: true }]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    name="ean"
-                    label={<span style={{ color: 'gray' }}>EAN</span>}
-                    rules={[{ required: true }]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    name="photo"
-                    label={<span style={{ color: 'gray' }}>Foto</span>}
-                >
-                    <Input />
-                </Form.Item>
-                <Button onClick={handleSubmit}>Hinzufügen</Button>
-                <div style={{ marginTop: '20px' }}>
-                    <span>{randomCompliment}</span>
-                </div>
-            </Form>
-        </>
+
+        <Form form={form} >
+            <Form.Item
+                name="productName"
+                label={<span style={{ color: 'gray' }}>Produktbezeichnung</span>}
+                rules={[{ required: true }]}
+            >
+                <Input />
+            </Form.Item>
+            <Form.Item
+                name="modelNumber"
+                label={<span style={{ color: 'gray' }}>Modell-Nr</span>}
+                rules={[{ required: true }]}
+            >
+                <Input />
+            </Form.Item>
+            <Form.Item
+                name="manufacturer"
+                label={<span style={{ color: 'gray' }}>Hersteller</span>}
+                rules={[{ required: true }]}
+            >
+                <Input />
+            </Form.Item>
+            <Form.Item
+                name="ean"
+                label={<span style={{ color: 'gray' }}>EAN</span>}
+                rules={[{ required: true }]}
+            >
+                <Input />
+            </Form.Item>
+            <Form.Item
+                name="photo"
+                label={<span style={{ color: 'gray' }}>Foto</span>}
+            >
+                <Input />
+            </Form.Item>
+            <Button onClick={handleSubmit}>Hinzufügen</Button>
+        </Form>
     );
 };
-
 
 
 const MainMenu = ({ setSelectedMenu, setSearchQuery }) => {
@@ -182,6 +135,7 @@ const MainMenu = ({ setSelectedMenu, setSearchQuery }) => {
         </Menu>
     );
 };
+
 const SearchResults = ({ searchQuery }) => {
     const [searchResults, setSearchResults] = useState([]);
     const [categories, setCategories] = useState([]);  // Hinzufügen dieser Zeile
@@ -331,5 +285,4 @@ const App = () => {
         </ConfigProvider>
     );
 };
-
 export default App;

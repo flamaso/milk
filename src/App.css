@@ -1,9 +1,0 @@
-/* Überschreibt den Fokus-Stil der Input-Komponente */
-.custom-input-focused:focus {
-    box-shadow: none !important;
-    /* Entfernt den Schatten */
-    outline: none !important;
-    /* Entfernt den Rand */
-    border-color: #ccc !important;
-    /* Setzt die Randfarbe auf Grau */
-}
